@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>Genius JavaScript LID Start Order Code Sample</title>
+    </head>
+    <body>
+        <form>
+          Genius IP:<br>
+          <input type="text" name="geniusIp" id="geniusIp"><br>
+          <br>
+          Item Details<br>
+          Item Amount:
+          <input name="itemAmountBox" id="itemAmountBox"><br>
+          Item Description:
+          <input name="itemDescriptionBox" id="itemDescriptionBox"><br>
+          Response:<br>
+          <textarea name="responseBox" id="responseBox"></textarea><br>
+          <button type="button" id="btnSend" onclick="GeniusStartOrderCall()">Start Order</button>
+          <button type="button" id="btnAddItem" onclick="GeniusAddItemCall()">Add Item</button>
+          <button type="button" id="btnEndOrder" onclick="GeniusEndOrderCall()">End Order</button>
+        </form>
+        <script>
+            function GeniusCall(geniusRequest) {
+                var xmlHttp = new XMLHttpRequest();
+                //Start a listener looking for a response back (readyState 4) and a successful response (status 200).
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                        //Print the response from the call to the Response text box.
+                        document.getElementById("responseBox").value = xmlHttp.responseText;
+                    }
+                };
+                //Make a GET call using the url we sent in as an argument.
+                xmlHttp.open("GET", geniusRequest);
+                xmlHttp.send();
+            }
+            function GeniusStartOrderCall() {
+                if (document.getElementById("geniusIp") !== ""){
+                    //Call the GeniusCall function with the parameter of the URL we wish to send, Pull the IP address from the geniusIp text box.
+                    GeniusCall("http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=StartOrder&Order=1234&Format=XML")
+                }
+            }
+            function GeniusAddItemCall() {
+                //Storing the values for the item to be added tot he screen. Some values are being read from text boxes.
+                var itemData = {
+                    order:"1234",
+                    type:"Sku",
+                    typeValue:"xxx",
+                    upc:"xxx",
+                    quantity:"1",
+                    description:document.getElementById("itemDescriptionBox").value,
+                    amount:document.getElementById("itemAmountBox").value,
+                }
+                if (document.getElementById("geniusIp") !== "") {
+                    //Call the GeniusCall function with the parameter of the URL we wish to send, Pull the IP address from the geniusIp text box and the item details from the itemData variable.
+                    GeniusCall("http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=AddItem&Order=1234&Type=Sku&TypeValue=xxx&UPC=xxx&Quantity=1&Description=" + itemData.description + "&Amount=" + itemData.amount + "&TaxAmount=0.11&OrderTotal=1.11&OrderTax=0.11&Category=None&Format=XML")
+                }
+            }
+            function GeniusEndOrderCall() {
+                if (document.getElementById("geniusIp") !== "") {
+                    //Call the GeniusCall function with the parameter of the URL we wish to send, Pull the IP address from the geniusIp text box.
+                    GeniusCall("http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=EndOrder&Order=1234&ExternalPaymentType=Cash&Format=XML")
+                }
+            }
+        </script> 
+    </body>
+</html>
