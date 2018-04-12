@@ -14,32 +14,32 @@
             <button type="button" id="btnSend" onclick="GeniusStartOrderCall()">Send</button>
             <button type="button" id="btnEndOrder" onclick="GeniusEndOrderCall()">End Order</button><br>
         </form>
-    <script>
-        function GeniusCall(geniusRequest) {
-            var xmlHttp = new XMLHttpRequest();
-            //Start a listener looking for a response back (readyState 4) and a successful response (status 200).
-            xmlHttp.onreadystatechange = function () {
-                if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
-                    //Print the response from the call to the Response text box.
-                    document.getElementById("responseBox").value = xmlHttp.responseText;
+        <script>
+            function GeniusCall(geniusRequest) {
+                var xmlHttp = new XMLHttpRequest();
+                //Start a listener looking for a response back (readyState 4) and a successful response (status 200).
+                xmlHttp.onreadystatechange = function () {
+                    if (xmlHttp.readyState === 4 && xmlHttp.status === 200) {
+                        //Print the response from the call to the Response text box.
+                        document.getElementById("responseBox").value = xmlHttp.responseText;
+                    }
+                };
+                //Make a GET call using the url we sent in as an argument.
+                xmlHttp.open("GET", geniusRequest);
+                xmlHttp.send();
+            }
+            function GeniusStartOrderCall() {
+                if (document.getElementById("geniusIp").value !== ""){
+                    //Call the GeniusCall function with the parameter of the URL we wish to send, Pull the IP address from the geniusIp text box.
+                    GeniusCall("http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=StartOrder&Order=1234&Format=XML");
                 }
-            };
-            //Make a GET call using the url we defined as an argument.
-            xmlHttp.open("GET", geniusRequest);
-            xmlHttp.send();
-        }
-        function GeniusStartOrderCall() {
-            if (document.getElementById("geniusIp").value !== ""){
-                //Store the url for the call in a variable and read the IP address for the device from the Genius IP text box on the page.
-                GeniusCall("http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=StartOrder&Order=1234&Format=XML");
             }
-        }
-        function GeniusEndOrderCall() {
-            if (document.getElementById("geniusip").value !== ""){
-                //Store the url for the call in a variable and read the IP address for the device from the Genius IP text box on the page.
-                GeniusCall("http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=EndOrder&Order=1234&ExternalPayentType=Cash&Format=XML");
+            function GeniusEndOrderCall() {
+                if (document.getElementById("geniusip").value !== ""){
+                    //Call the GeniusCall function with the parameter of the URL we wish to send, Pull the IP address from the geniusIp text box.
+                    GeniusCall("http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=EndOrder&Order=1234&ExternalPayentType=Cash&Format=XML");
+                }
             }
-        }
-    </script>
+        </script>
     </body>
 </html>
