@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +11,7 @@
             <input type="text" name="geniusIp" id="geniusIp"><br>
             Response:<br>
             <textarea name="responseBox" id="responseBox"></textarea><br>
-            <button type="button" id="btnSend" onclick="GeniusStartOrderCall()">Send</button>
+            <button type="button" id="btnSend" onclick="GeniusStartOrderCall()">Start Order</button>
             <button type="button" id="btnEndOrder" onclick="GeniusEndOrderCall()">End Order</button><br>
         </form>
         <script>
@@ -35,9 +35,9 @@
                 }
             }
             function GeniusEndOrderCall() {
-                if (document.getElementById("geniusip").value !== ""){
+                if (document.getElementById("geniusIp").value !== ""){
                     //Call the GeniusCall function with the parameter of the URL we wish to send, Pull the IP address from the geniusIp text box.
-                    GeniusCall("http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=EndOrder&Order=1234&ExternalPayentType=Cash&Format=XML");
+                    GeniusCall("http://" + document.getElementById("geniusIp").value + ":8080/pos?Action=EndOrder&Order=1234&ExternalPaymentType=Cash&Format=XML");
                 }
             }
         </script>
