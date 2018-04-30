@@ -10,7 +10,7 @@
                 ),
             "PaymentData" => array (
                 "Source"     => "Vault",
-                "VaultToken" => "100000100ABCDE123456",
+                "VaultToken" => "OTT_LT1KSFBNOZB123456A",
                 ),
             "Request" => array (
                 "Amount"                     => "1.01",

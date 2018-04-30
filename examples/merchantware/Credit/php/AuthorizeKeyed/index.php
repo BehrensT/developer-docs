@@ -1,7 +1,7 @@
 <?php
     header("Content-Type: application/json");
     $client = new SoapClient("https://ps1.merchantware.net/Merchantware/ws/RetailTransaction/v45/Credit.asmx?WSDL");
-    $response = $client->Sale(
+    $response = $client->Authorize(
         array (
             "Credentials" => array (
                 "MerchantName"   => "TEST MERCHANT",
@@ -19,7 +19,7 @@
                 ),
             "Request" => array (
                 "Amount"                     => "1.01",
-                "TaxAmount"                  => "0.10",
+				"TaxAmount"                  => "0.10",
                 "InvoiceNumber"              => "INV1234",
                 "CardAcceptorTerminalId"     => "01",
                 "CustomerCode"               => "1234",
@@ -28,5 +28,5 @@
                 )
             )
         );
-    print_r(json_encode($response->SaleResult));
+    print_r(json_encode($response->AuthorizeResult));
 ?>
